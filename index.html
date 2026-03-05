@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spex Shop Navbar Sidebar</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Cairo', sans-serif;
+}
+
+body {
+  background-color: #111;
+  min-height: 200vh;
+}
+
+/* ===== Navbar ===== */
+header {
+  opacity: 0;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%, -20px);
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 25px;
+  background: rgba(120,120,120,0.2);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  z-index: 1000;
+  transition: 0.3s;
+  animation: fadeInNav 1s forwards ease-out;
+}
+
+@keyframes fadeInNav {
+  0% {opacity:0; transform:translate(-50%,-30px);}
+  100% {opacity:1; transform:translate(-50%,0);}
+}
+
+/* ===== Logo ===== */
+.logo {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ===== Cart ===== */
+.cart {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  background: #fff;
+  padding: 6px 12px;
+  border-radius: 12px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cart img {
+  width: 28px;
+  height: 28px;
+}
+
+.cart-count {
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #000;
+}
+
+.cart:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(255,255,255,0.4);
+}
+
+/* ===== Header Nav Links ===== */
+#nav-menu {
+  display: flex; /* يظهر على الشاشات الكبيرة */
+  align-items: center;
+  gap: 20px;
+}
+
+#nav-menu a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+#nav-menu a img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+
+#nav-menu a:hover {
+  background: #111;
+  transform: scale(1.05);
+}
+
+#nav-menu a:hover img {
+  transform: scale(1.2);
+}
+
+/* ===== Header Search Box ===== */
+#search-menu {
+  display: flex; /* يظهر على الشاشات الكبيرة */
+  align-items: center;
+  background: rgba(200,200,200,0.1);
+  border-radius: 12px;
+  padding: 5px 10px;
+}
+
+#search-menu input {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  padding: 5px;
+  width: 120px;
+}
+
+#search-menu input:focus {
+  outline: none;
+  border-bottom: 2px solid #fff;
+  transition: border 0.3s;
+}
+
+#search-menu button {
+  border: none;
+  background: #fff;
+  color: #111;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+#search-menu button:hover {
+  background: #eee;
+  transform: scale(1.05);
+}
+
+/* ===== Hamburger ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 22px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.hamburger div {
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* ===== Hamburger to X ===== */
+.hamburger.active div:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+
+.hamburger.active div:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active div:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -40vw; /* يبدأ خارج الشاشة */
+  width: 40vw;  /* 40% من عرض الشاشة */
+  height: 100%;
+  background: rgba(20,20,20,0.95);
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: left 0.3s ease;
+  z-index: 1050;
+  overflow-x: hidden;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+/* Sidebar nav links */
+.sidebar nav a {
+  width: 100%;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s;
+}
+
+.sidebar nav a img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+
+.sidebar nav a:hover {
+  background: #111;
+}
+
+.sidebar nav a:hover img {
+  transform: scale(1.2);
+}
+
+/* Sidebar Search */
+/* Sidebar Search عمودي */
+.sidebar .search-container {
+  display: flex;
+  flex-direction: column; /* عمودي */
+  gap: 10px; /* مسافة بين input و الزرار */
+  width: 100%;
+}
+
+.sidebar input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+}
+
+.sidebar button {
+  width: 100%;  /* الزرار ياخد نفس عرض input */
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #fff;
+  color: #111;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.sidebar button:hover {
+  background: #eee;
+}
+
+/* ===== Responsive ===== */
+@media(max-width:900px){
+  .hamburger { display: flex; }
+  #nav-menu, #search-menu { display: none; }
+}
+
+/* ===== Import Font ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* ===== Hero Section ===== */
+.hero {
+  height: 100vh;
+  background: url('bc1.jpg') center/cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* الكلام على الشمال */
+  padding-left: 8%;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  background-attachment: fixed;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45); /* Overlay غامق */
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1.2s ease forwards;
+  max-width: 500px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+  opacity: 0.9;
+}
+
+/* ===== Buttons Glass Effect ===== */
+
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+/* زرار Glass رمادي */
+.btn.glass {
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn.glass:hover {
+  background: rgba(255,255,255,0.25);
+  transform: scale(1.05);
+}
+
+/* زرار بيج فاخر */
+.btn.beige {
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(150,120,80,0.4);
+  background: linear-gradient(135deg, #e29f4e, #e0aa6a, #daad77); /* بيج فخم وسط */
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn.beige:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(180,140,90,0.5);
+}
+
+/* ===== Fade Animation ===== */
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Responsive ===== */
+@media(max-width:768px){
+  .hero h1 { font-size:2.2rem; }
+  .hero p { font-size:1rem; }
+
+  .hero-buttons { 
+    flex-direction: column; 
+    align-items: center; /* مهم جدًا لتوسيط الأزرار */
+    gap: 12px; /* تباعد مناسب عند العمود */
+  }
+
+  .btn.glass,
+  .btn.beige {
+    width: 70%; /* اختياري: يجعل الزرار أعرض قليلاً ويتوسط أفضل */
+    text-align: center;
+  }
+}
+
+
+/* ===== Category Section تحت الهيرو ===== */
+.category-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  padding: 40px 8%;
+  background: #111;
+}
+
+/* ===== Category Card ===== */
+.category-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  padding: 10px;
+  border-radius: 18px;
+
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+/* الأيقونة */
+.category-item img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+/* Hover */
+.category-item:hover {
+  transform: translateY(-6px);
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* ===== Responsive ===== */
+@media(max-width:900px){
+  .category-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width:500px){
+  .category-bar {
+    grid-template-columns: repeat(2, 1fr); /* يفضل 2×2 */
+  }
+}
+
+/* ===== Thin Grey Divider ===== */
+.section-divider {
+  width: 100%;
+  height: 1px; /* رفيع جدًا */
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(200,200,200,0.4),
+    transparent
+  );
+  margin: 40px 0; /* مسافة فوق وتحت */
+}
+
+/* ===== Products Grid Section ===== */
+.products-section {
+  padding: 50px 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.products-title {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* ===== Grid Products ===== */
+.products-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(4, 1fr); /* 4 كروت على الكبير */
+  justify-items: center;
+}
+
+/* ===== Product Card ===== */
+.product-card {
+  background: #1a1a1a;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  max-width: 280px; /* أقصى حجم للكارت */
+  width: 100%;
+  margin: 0 auto; /* يوسّط الكارت */
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+}
+
+/* ===== صورة المنتج ===== */
+.product-image {
+  position: relative;
+}
+
+.product-image img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== قلب المفضلة ===== */
+.wishlist {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 22px;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s ease;
+}
+
+.wishlist.active {
+  color: red;
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* ===== معلومات المنتج ===== */
+.product-info {
+  padding: 15px;
+  text-align: center;
+  color: #fff;
+}
+
+.product-info h3 {
+  margin-bottom: 8px;
+}
+
+.product-info p {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-weight: bold;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+/* ===== زرار السلة ===== */
+.add-to-cart {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background: linear-gradient(135deg, #e29f4e, #e0aa6a, #daad77);
+  color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
+
+.add-to-cart img {
+  width: 18px;
+}
+
+.add-to-cart:hover {
+  transform: scale(1.05);
+}
+
+/* ===== Responsive ===== */
+/* تابلت كبير */
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr); /* كبير تبقى 4 */
+  }
+}
+
+/* التابلت / الموبايل المتوسط */
+@media (max-width: 900px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 كروت جنب بعض */
+  }
+}
+
+/* الموبايل الصغير */
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2×2 بدل 1×1 */
+  }
+}
+
+/* ===== Cart Sidebar ===== */
+/* ===== Cart Sidebar من اليمين ===== */
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: -350px; /* يبدأ برا الشاشة من اليمين */
+  width: 350px;
+  height: 100%;
+  background: rgba(20,20,20,0.95);
+  padding: 30px 20px;
+  transition: right 0.3s ease;
+  z-index: 1200;
+  overflow-y: auto;
+}
+
+.cart-sidebar.active {
+  right: 0; /* يظهر من اليمين */
+}
+
+/* باقي CSS يبقى زي ما هو */
+.cart-sidebar .cart-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  background: rgba(255,255,255,0.05);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.cart-sidebar .cart-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cart-sidebar .cart-item-details {
+  flex: 1;
+  color: #fff;
+}
+
+.cart-sidebar .cart-item-details h4 {
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.cart-sidebar .cart-item-details p {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.cart-sidebar .cart-item-details .price {
+  font-weight: bold;
+}
+
+.cart-sidebar .remove-item {
+  cursor: pointer;
+  color: #ff4d4d;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.cart-sidebar .remove-item:hover {
+  transform: scale(1.2);
+}
+
+/* Slider / Hero للشاشات الصغيرة جدًا */
+@media (max-width: 375px) {  /* iPhone SE/8 */
+  .hero {
+    height: 300px;  /* قلل الارتفاع */
+  }
+
+  .hero-content h1 {
+    font-size: 20px; /* تصغير العنوان */
+  }
+
+  .hero-content p {
+    font-size: 14px; /* تصغير الفقرة */
+  }
+
+  .hero-buttons .btn {
+    padding: 6px 10px; /* تصغير الأزرار */
+    font-size: 12px;
+  }
+}
+
+/* أصغر من 320px */
+@media (max-width: 320px) {
+  .hero {
+    height: 260px;
+  }
+
+  .hero-content h1 {
+    font-size: 18px;
+  }
+
+  .hero-content p {
+    font-size: 12px;
+  }
+
+  .hero-buttons .btn {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+}
+
+.cart-sidebar {
+  width: 300px; 
+  height: 100vh; 
+  position: fixed;
+  top: 0;
+  right: -100%;
+  background-color: rgba(0,0,0,0.8); /* اللون الأسود الشفاف الأصلي */
+  padding: 20px;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+}
+
+/* الشاشات الصغيرة جدًا */
+@media (max-width: 480px) {
+  .cart-sidebar {
+    height: 33vh; /* ثلث الشاشة */
+    width: 250px; 
+    background-color: rgba(0,0,0,0.8); /* نحافظ على الشفافية */
+  }
+}
+
+@media (max-width: 375px) {
+  .cart-sidebar {
+    height: 33vh; 
+    width: 220px;
+    background-color: rgba(0,0,0,0.8);
+  }
+}
+
+@media (max-width: 320px) {
+  .cart-sidebar {
+    height: 33vh; 
+    width: 200px;
+    background-color: rgba(0,0,0,0.8);
+  }
+}
+
+/* ===== Trending Section ===== */
+
+.trending {
+  padding: 80px 8%;
+  background: #111;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 32px;
+  margin-bottom: 50px;
+  color: white;
+}
+
+.trending-container {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.trend-card {
+  position: relative;
+  width: 320px;
+  height: 420px;
+  overflow: hidden;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.trend-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.5s ease;
+}
+
+.trend-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  transform: translateY(100%);
+  transition: 0.4s ease;
+}
+
+.trend-card:hover img {
+  transform: scale(1.1);
+}
+
+.trend-card:hover .trend-overlay {
+  transform: translateY(0);
+}
+
+.trend-overlay button {
+  margin-top: 10px;
+  padding: 8px 20px;
+  border: none;
+  background: #ff4d4d; /* حطي لون موقعك الأساسي */
+  color: white;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  
+  <div class="cart">
+    <img src="Cart.png" alt="Cart">
+    <span class="cart-count" id="cart-count">0</span>
+  </div>
+
+  <div class="logo">Spex Shop</div>
+
+  <div class="hamburger" id="hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- Header Nav Links -->
+  <nav id="nav-menu">
+    <a href="#signin"><img src="sign-in.png" alt=""> Sign In</a>
+    <a href="#contact"><img src="chat.png" alt=""> التواصل</a>
+    <a href="#offers"><img src="sale.png" alt=""> العروض</a>
+  </nav>
+
+  <!-- Header Search -->
+  <div class="search-container" id="search-menu">
+    <input type="text" placeholder="ابحث...">
+    <button>Search</button>
+  </div>
+</header>
+
+<!-- Sidebar للشاشات الصغيرة -->
+<div class="sidebar" id="sidebar">
+  <nav>
+    <a href="#signin"><img src="sign-in.png" alt=""> Sign In</a>
+    <a href="#contact"><img src="chat.png" alt=""> التواصل</a>
+    <a href="#offers"><img src="sale.png" alt=""> العروض</a>
+  </nav>
+  <div class="search-container">
+    <input type="text" placeholder="ابحث...">
+    <button>Search</button>
+  </div>
+</div>
+
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>New Collection 2026</h1>
+    <p>Discover the latest fashion trends with style and comfort</p>
+    
+    <div class="hero-buttons">
+      <button class="btn glass">الخصومات</button>
+      <button class="btn beige">اطلب الآن</button>
+    </div>
+
+  </div>
+</section>
+
+<section class="category-bar">
+  <div class="category-item">
+    <img src="men.png" alt="">
+    <span>رجالي</span>
+  </div>
+
+  <div class="category-item">
+    <img src="kids.png" alt="">
+    <span>أطفال</span>
+  </div>
+
+  <div class="category-item">
+    <img src="women.png" alt="">
+    <span>نسائي</span>
+  </div>
+
+  <div class="category-item">
+    <img src="sale.png" alt="">
+    <span>خصومات</span>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section class="products-section">
+  <h2 class="products-title">الهوديز الجديدة</h2>
+
+  <div class="products-grid">
+
+    <!-- كررت 16 كارت حرفيًا -->
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg1.jpg" alt="" loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي رمادي</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">450 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg2.jpg" alt="" loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي أسود</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">470 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg3.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي أزرق</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">460 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg4.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي أخضر</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">455 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg5.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي بني</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">480 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg6.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي بيج</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">470 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg7.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي زهري</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">460 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg8.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي برتقالي</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">465 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg9.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي بنفسجي</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">470 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg10.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي كحلي</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">480 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg11.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي فيروزي</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">455 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg12.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي زيتوني</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">460 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg13.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي تركواز</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">475 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg14.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي بيج فاتح</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">465 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg15.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي بني فاتح</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">470 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="Bg/main-body-bg16.jpg" alt=""loading="lazy">
+        <span class="wishlist">&#10084;</span>
+      </div>
+      <div class="product-info">
+        <h3>هودي رمادي فاتح</h3>
+        <p>قطن 100% - خامة ثقيلة - مريح</p>
+        <div class="price">455 جنيه</div>
+        <button class="add-to-cart"><img src="cart.png" alt=""> إضافة إلى السلة</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Sidebar السلة في آخر الـ body -->
+<div class="cart-sidebar" id="cart-sidebar">
+  <h2 style="color:white; margin-bottom:20px;">سلتك</h2>
+  <div class="cart-items" id="cart-items">
+    <!-- العناصر المضافة هتظهر هنا -->
+  </div>
+  <div style="margin-top:20px; color:white; font-weight:bold;">
+    إجمالي العناصر: <span id="total-items">0</span>
+  </div>
+</div>
+
+
+
+
+<section class="trending">
+  <h2 class="section-title"> Trending Now</h2>
+
+<div class="section-divider"></div>
+
+  <div class="trending-container">
+
+    <div class="trend-card">
+      <img src="Bg/main-body-bg7.jpg" alt="">
+      <div class="trend-overlay">
+        <h3>Urban Jacket</h3>
+        <button>Shop Now</button>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <img src="Bg/main-body-bg8.jpg" alt="">
+      <div class="trend-overlay">
+        <h3>Street Hoodie</h3>
+        <button>Shop Now</button>
+      </div>
+    </div>
+
+    <div class="trend-card">
+      <img src="Bg/main-body-bg5.jpg" alt="">
+      <div class="trend-overlay">
+        <h3>Casual Fit</h3>
+        <button>Shop Now</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const sidebar = document.getElementById('sidebar');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active'); // الهامبرغر يتحول X
+  sidebar.classList.toggle('active');   // Sidebar يفتح/يغلق
+});
+
+
+
+</script>
+
+
+<script>
+document.querySelectorAll(".wishlist").forEach(heart => {
+  heart.addEventListener("click", () => {
+    heart.classList.toggle("active");
+  });
+});
+</script>
+
+
+<script>
+// اختر كل أزرار "إضافة إلى السلة"
+const cartButtons = document.querySelectorAll('.add-to-cart');
+const cartCount = document.getElementById('cart-count');
+
+cartButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    // اقرأ الرقم الحالي وعدّه +1
+    let count = parseInt(cartCount.textContent);
+    count++;
+    cartCount.textContent = count;
+  });
+});
+</script>
+
+<script>
+  
+
+  
+  // ===== Cart Sidebar Elements =====
+const cartSidebar = document.getElementById('cart-sidebar');
+const cartIcon = document.querySelector('.cart');
+const cartItemsContainer = document.getElementById('cart-items');
+const totalItems = document.getElementById('total-items');
+
+let cartCountNumber = 0;
+
+// ===== فتح / غلق السلة =====
+cartIcon.addEventListener('click', (e) => {
+  e.stopPropagation(); // يمنع أي تأثير على hamburger
+  cartSidebar.classList.toggle('active');
+});
+
+// ===== إضافة المنتجات إلى السلة =====
+const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+addToCartButtons.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation(); // منع التأثير على أي events فوق
+    const productCard = e.target.closest('.product-card');
+    const imgSrc = productCard.querySelector('img').src;
+    const name = productCard.querySelector('h3').textContent;
+    const price = productCard.querySelector('.price').textContent;
+
+    // إنشاء عنصر جديد للسلة
+    const cartItem = document.createElement('div');
+    cartItem.classList.add('cart-item');
+    cartItem.innerHTML = `
+      <img src="${imgSrc}" alt="${name}">
+      <div class="cart-item-details">
+        <h4>${name}</h4>
+        <p class="price">${price}</p>
+      </div>
+      <span class="remove-item">حذف</span>
+    `;
+
+    cartItemsContainer.appendChild(cartItem);
+
+    // تحديث العداد
+    cartCountNumber++;
+    document.getElementById('cart-count').textContent = cartCountNumber;
+    totalItems.textContent = cartCountNumber;
+  });
+});
+
+// ===== حذف عناصر السلة =====
+cartItemsContainer.addEventListener('click', (e) => {
+  if(e.target.classList.contains('remove-item')){
+    e.stopPropagation(); // مهم جدًا يمنع أي تأثير على sidebar animation
+
+    const item = e.target.closest('.cart-item');
+    if(item){
+      item.remove();
+
+      // تحديث العداد بعد الحذف
+      cartCountNumber = Math.max(0, cartCountNumber - 1);
+      document.getElementById('cart-count').textContent = cartCountNumber;
+      totalItems.textContent = cartCountNumber;
+    }
+  }
+});
+  
+  
+  
+  
+</script>
+</body>
+</html>
